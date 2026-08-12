@@ -157,32 +157,37 @@
   }
   .scroll-hint .arr{display:inline-block;animation:bob 2s ease-in-out infinite;color:var(--ember);font-size:22px;}
 
-  /* ---------- CERRAdura ---------- */
+  /* ---------- CERRAdura (PIN digital) ---------- */
   #lock{flex-direction:column;text-align:center;padding:24px;background:radial-gradient(ellipse at 50% 60%, rgba(233,180,76,.12), transparent 65%);}
   .lock-title{font-size:clamp(26px,4vw,38px);color:var(--gold2);font-weight:600;letter-spacing:2px;text-shadow:0 0 40px rgba(233,180,76,.45);}
   .lock-sub{color:#cfc6ec;font-size:clamp(15px,2.2vw,18px);font-style:italic;margin-top:10px;}
   .lock-scene{
-    position:relative;margin:34px auto 0;width:min(520px,92vw);height:300px;
+    position:relative;margin:26px auto 0;width:min(420px,88vw);height:230px;
     border:1px dashed rgba(233,180,76,.4);border-radius:20px;
     background:radial-gradient(circle at 50% 60%, rgba(233,180,76,.08), transparent 60%);
   }
-  .padlock{position:absolute;left:50%;top:50%;transform:translate(-50%,-58%);width:190px;height:190px;transition:filter .6s ease;}
+  .padlock{position:absolute;left:50%;top:50%;transform:translate(-50%,-52%);width:190px;height:190px;transition:filter .6s ease;}
   .padlock.unlocked{filter:drop-shadow(0 0 34px rgba(247,214,138,.9))}
   .padlock .shackle{transform-origin:50% 0;transition:transform 1s cubic-bezier(.2,1.6,.4,1);}
   .padlock.unlocked .shackle{transform:rotate(-28deg) translate(-8px,6px)}
   .padlock .keyhole{transition:transform .8s ease, opacity .8s ease}
   .padlock.unlocked .keyhole{transform:scaleY(.15);opacity:.15}
 
-  .pin-drag{
-    position:absolute;width:120px;height:120px;cursor:grab;touch-action:none;z-index:10;
-    transition:transform .3s ease;will-change:transform;
-    filter:drop-shadow(0 8px 16px rgba(0,0,0,.55));
+  .pin-panel{display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:24px;}
+  .pin-panel input{
+    width:min(360px,84vw);text-align:center;
+    font-family:var(--font-hand);font-size:clamp(20px,3vw,26px);font-style:italic;letter-spacing:3px;
+    color:#3a2c1e;background:linear-gradient(160deg,#fbf3e2,#f1e2c4);
+    border:1px solid rgba(201,160,80,.8);border-radius:999px;padding:13px 20px;
+    outline:none;box-shadow:0 6px 24px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.6);
+    transition:box-shadow .3s ease, transform .3s ease;
   }
-  .pin-drag.dragging{transition:none;cursor:grabbing;filter:drop-shadow(0 10px 22px rgba(0,0,0,.7)) drop-shadow(0 0 20px rgba(233,180,76,.5));}
-  .pin-drag.hold{animation:hold 1s ease-in-out infinite}
-  @keyframes hold{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-  .pin-drag.snapped{transition:transform .6s cubic-bezier(.2,1.4,.4,1), opacity .4s ease;}
-  .pin-drag.inserted{transform:translate(-50%,-50%) scale(.12);opacity:0;pointer-events:none;}
+  .pin-panel input:focus{box-shadow:0 0 0 3px rgba(233,180,76,.35), 0 6px 24px rgba(0,0,0,.4);transform:scale(1.02)}
+  .pin-panel.wrong input{animation:shake .45s ease;border-color:#ff6b45;box-shadow:0 0 0 3px rgba(255,107,69,.35)}
+  @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-10px)}40%{transform:translateX(9px)}60%{transform:translateX(-6px)}80%{transform:translateX(4px)}}
+  .lock-err{color:#ff6b45;font-size:14px;font-style:italic;opacity:0;transition:opacity .3s ease;min-height:16px;letter-spacing:.5px;}
+  .lock-err.show{opacity:1}
+  .lock-clue{color:#8a8ab0;font-size:13px;font-style:italic;letter-spacing:.5px;}
 
   .burst{position:absolute;border-radius:50%;pointer-events:none;z-index:11;
     background:radial-gradient(circle at 40% 40%, #ffe9ad, #e9b44c 60%, transparent 70%);
@@ -190,8 +195,8 @@
   @keyframes burst{from{transform:translate(-50%,-50%) translate(0,0) scale(.3);opacity:1}to{transform:translate(-50%,-50%) translate(var(--tx),var(--ty)) scale(.6);opacity:0}}
 
   .btn-ghost{
-    margin-top:26px;font-family:var(--font-title);font-size:15px;letter-spacing:2px;color:var(--gold2);
-    background:transparent;border:1px solid rgba(233,180,76,.6);border-radius:999px;padding:10px 28px;
+    margin-top:6px;font-family:var(--font-title);font-size:16px;letter-spacing:2px;color:var(--gold2);
+    background:transparent;border:1px solid rgba(233,180,76,.6);border-radius:999px;padding:11px 30px;
     cursor:pointer;transition:all .25s ease;
   }
   .btn-ghost:hover{background:rgba(233,180,76,.12);box-shadow:0 0 24px rgba(233,180,76,.35)}
@@ -238,7 +243,7 @@
     <span class="sign">&#9800;</span>
   </div>
   <h1 class="title fade" style="animation-delay:.3s">Para mi Lau,<br>mi sanadora de fuego</h1>
-  <p class="subtitle fade" style="animation-delay:.6s">Una carta escrita con arte, astrología y un poco de código</p>
+  <p class="subtitle fade" style="animation-delay:.6s">Una carta sellada con una palabra alemana &mdash; arte, astrología y un poco de código</p>
   <div class="code fade" style="animation-delay:.9s"><span class="cm">// Aries arde primero, piensa después.</span>
 <span class="kw">const</span> fuego = <span class="fn">encenderPara</span>(<span class="st">'Lau'</span>);
 <span class="kw">const</span> admiración = <span class="fn">capturar</span>(<span class="st">'sus trazos'</span>);
@@ -247,12 +252,11 @@
   <p class="hint">&#9804; LEO &nbsp;&middot;&nbsp; &amp; &nbsp;&middot;&nbsp; ARIES &#9800;</p>
 </section>
 
-<!-- ============ CERRADURA (el pin es la llave) ============ -->
+<!-- ============ CERRADURA (PIN digital) ============ -->
 <section id="lock" class="screen">
   <h3 class="lock-title fade">Tu carta está sellada</h3>
-  <p class="lock-sub fade" style="animation-delay:.3s">Solo se abre con el pin que hice para ti.</p>
-  <p class="lock-sub fade" style="animation-delay:.5s;font-size:clamp(14px,2vw,17px)">Arrastra el pin hacia la cerradura dorada.</p>
-  <div class="lock-scene fade" style="animation-delay:.7s">
+  <p class="lock-sub fade" style="animation-delay:.3s">Se abre solo con una palabra. Una palabra alemana.</p>
+  <div class="lock-scene fade" style="animation-delay:.6s">
     <svg class="padlock" id="padlock" viewBox="0 0 190 190" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="lkgold" x1="0" y1="0" x2="1" y2="1">
@@ -271,58 +275,13 @@
       <path class="keyhole" d="M95 104 a10 10 0 1 1 -10 10 c0 7 10 12 10 20 0-8 10-13 10-20 a10 10 0 1 1 -10-10z" fill="#0b1030"/>
       <rect x="34" y="84" width="122" height="92" rx="20" fill="url(#lkgloss)"/>
     </svg>
-    <div class="pin-drag" id="pinDrag" title="El pin">
-      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
-        <defs>
-          <radialGradient id="pinshadow" cx="50%" cy="50%" r="50%">
-            <stop offset="70%" stop-color="#000" stop-opacity="0"/>
-            <stop offset="100%" stop-color="#000" stop-opacity=".55"/>
-          </radialGradient>
-          <linearGradient id="pingold" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#fff3c4"/>
-            <stop offset="45%" stop-color="#e9b44c"/>
-            <stop offset="100%" stop-color="#9c6d1d"/>
-          </linearGradient>
-          <linearGradient id="pingoldTxt" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#ffe9ad"/>
-            <stop offset="100%" stop-color="#c47f1c"/>
-          </linearGradient>
-          <radialGradient id="pinenamel" cx="40%" cy="35%" r="75%">
-            <stop offset="0%" stop-color="#1a2150"/>
-            <stop offset="70%" stop-color="#0b1030"/>
-            <stop offset="100%" stop-color="#06091c"/>
-          </radialGradient>
-          <linearGradient id="pinfire" x1="0" y1="1" x2="0" y2="0">
-            <stop offset="0%" stop-color="#ff6b45"/>
-            <stop offset="100%" stop-color="#ffd36a"/>
-          </linearGradient>
-          <radialGradient id="pingloss" cx="35%" cy="30%" r="60%">
-            <stop offset="0%" stop-color="#fff" stop-opacity=".28"/>
-            <stop offset="60%" stop-color="#fff" stop-opacity="0"/>
-          </radialGradient>
-        </defs>
-        <circle cx="100" cy="100" r="100" fill="url(#pinshadow)"/>
-        <circle cx="100" cy="100" r="97" fill="url(#pingold)"/>
-        <circle cx="100" cy="100" r="82" fill="url(#pinenamel)"/>
-        <path d="M35 62 A 82 82 0 0 1 100 18" stroke="#fff7dc" stroke-width="5" fill="none" stroke-linecap="round" opacity=".55"/>
-        <circle cx="46" cy="52" r="1.8" fill="#f7d68a"/><circle cx="58" cy="44" r="1.8" fill="#f7d68a"/>
-        <circle cx="72" cy="50" r="1.8" fill="#f7d68a"/><circle cx="82" cy="58" r="1.8" fill="#f7d68a"/>
-        <path d="M46 52 L58 44 L72 50 L82 58" stroke="#f7d68a" stroke-width="1" fill="none" opacity=".6"/>
-        <g transform="rotate(38 100 100)">
-          <rect x="118" y="34" width="13" height="40" rx="6" fill="#7a4a1d" stroke="#4a2c10" stroke-width="1"/>
-          <rect x="113" y="70" width="23" height="13" rx="3" fill="#e0b05a" stroke="#8a6a2c" stroke-width="1"/>
-          <path d="M120 83 L129 83 L123 108 Z" fill="#f2c94c"/>
-          <path d="M113 83 L120 83 L116 108 Z" fill="#d99a2b"/>
-        </g>
-        <text x="100" y="112" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="78" fill="url(#pingoldTxt)">&#9804;</text>
-        <path d="M104 148 C 116 138 118 128 108 124 C 111 132 108 134 106 134 C 110 126 104 118 96 122 C 88 126 92 138 100 148 Z" fill="url(#pinfire)" opacity=".95"/>
-        <text x="100" y="163" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-style="italic" font-size="24" fill="url(#pingoldTxt)">L</text>
-        <circle cx="100" cy="100" r="82" fill="url(#pingloss)"/>
-      </svg>
-    </div>
   </div>
-  <button class="btn-ghost fade" style="animation-delay:1s" id="btnInsert">Insertar el pin (alternativa)</button>
-  <p class="hint">EL PIN ES LA LLAVE &nbsp;&#128279;</p>
+  <div class="pin-panel fade" style="animation-delay:.9s">
+    <input id="pinInput" type="text" placeholder="escribe la palabra aquí..." autocomplete="off" autocapitalize="off" spellcheck="false">
+    <button class="btn-ghost" id="btnUnlock">Abrir la carta</button>
+    <p class="lock-err" id="pinErr">Esa palabra no abre el candado. Prueba otra vez.</p>
+    <p class="lock-clue" id="pinClue">Pista: el Sol te rige, y el Sol tiene un nombre en alemán.</p>
+  </div>
 </section>
 
 <!-- ============ CARTA ============ -->
@@ -611,42 +570,29 @@
   function showScreen(el){ el.classList.add('show'); }
   function hideScreen(el){ el.classList.remove('show'); }
 
-  /* ================= CERRADURA: el pin es la llave ================= */
+  /* ================= CERRADURA: PIN digital (palabra alemana) ================= */
   var lock = document.getElementById('lock');
   var padlock = document.getElementById('padlock');
-  var pinDrag = document.getElementById('pinDrag');
   var seal = document.getElementById('seal');
+  var pinInput = document.getElementById('pinInput');
+  var pinErr = document.getElementById('pinErr');
 
-  function pinSceneCenter(){
-    var scene = lock.querySelector('.lock-scene');
-    var sr = scene.getBoundingClientRect();
-    return {x: sr.width/2, y: sr.height/2};
-  }
-
-  function pinPos(){
-    var t = pinDrag.style.transform || '';
-    var m = t.match(/translate\(([-\d.]+)px,\s*([-\d.]+)px\)/);
-    if (m) return {x:parseFloat(m[1]), y:parseFloat(m[2])};
-    return {x:0, y:0};
-  }
-
-  function placePin(){
-    var c = pinSceneCenter();
-    pinDrag.style.transform = 'translate(' + (c.x - 60) + 'px,' + (c.y - 60) + 'px)';
-  }
+  // LA PALABRA SECRETA. Cámbiala aquí si quieres otra.
+  var SECRET_WORD = 'Sonne';
 
   function burstAt(x, y){
-    for (var i=0;i<8;i++){
+    var scene = document.querySelector('.lock-scene');
+    for (var i=0;i<10;i++){
       var b = document.createElement('div');
       b.className = 'burst';
       var size = 14 + Math.random()*22;
       b.style.width = b.style.height = size + 'px';
-      var ang = Math.random()*Math.PI*2, dist = 30 + Math.random()*70;
+      var ang = Math.random()*Math.PI*2, dist = 30 + Math.random()*80;
       b.style.setProperty('--tx', Math.cos(ang)*dist + 'px');
       b.style.setProperty('--ty', Math.sin(ang)*dist + 'px');
       b.style.left = x + 'px';
       b.style.top = y + 'px';
-      document.querySelector('.lock-scene').appendChild(b);
+      scene.appendChild(b);
       setTimeout(function(el){ el.remove(); }, 950);
     }
   }
@@ -654,81 +600,46 @@
   function unlock(){
     if (lock.dataset.open === '1') return;
     lock.dataset.open = '1';
-    pinDrag.classList.remove('hold','dragging');
-    pinDrag.classList.add('snapped');
-    var c = pinSceneCenter();
-    pinDrag.style.transform = 'translate(' + (c.x - 60) + 'px,' + (c.y - 60) + 'px) scale(.1)';
-    pinDrag.style.opacity = '0';
-    pinDrag.classList.add('inserted');
     padlock.classList.add('unlocked');
-    burstAt(c.x, c.y);
+    pinInput.blur();
+    var sr = document.querySelector('.lock-scene').getBoundingClientRect();
+    burstAt(sr.width/2, sr.height/2);
     setTimeout(function(){
       hideScreen(lock);
       startLetter();
     }, 1500);
   }
 
-  function beginDrag(e){
-    if (lock.dataset.open === '1') return;
-    e.preventDefault();
-    pinDrag.setPointerCapture(e.pointerId);
-    pinDrag.classList.remove('hold');
-    pinDrag.classList.add('dragging');
-    var pos = pinPos();
-    pinDrag.dataset.sx = e.clientX - pos.x;
-    pinDrag.dataset.sy = e.clientY - pos.y;
-  }
-
-  function onDragMove(e){
-    if (lock.dataset.open === '1') return;
-    if (!pinDrag.classList.contains('dragging')) return;
-    var x = e.clientX - parseFloat(pinDrag.dataset.sx);
-    var y = e.clientY - parseFloat(pinDrag.dataset.sy);
-    var c = pinSceneCenter();
-    // magnetismo suave
-    var dist = Math.hypot(x + 60 - c.x, y + 60 - c.y);
-    if (dist < 130){
-      var pull = (130 - dist) * .35;
-      var dx = c.x - 60 - x, dy = c.y - 60 - y;
-      var len = Math.max(Math.hypot(dx,dy), 1);
-      x += dx/len * pull; y += dy/len * pull;
-    }
-    pinDrag.style.transform = 'translate(' + x + 'px,' + y + 'px)';
-  }
-
-  function endDrag(e){
-    if (lock.dataset.open === '1') return;
-    pinDrag.classList.remove('dragging');
-    var c = pinSceneCenter();
-    var pos = pinPos();
-    var dist = Math.hypot(pos.x + 60 - c.x, pos.y + 60 - c.y);
-    if (dist < 90){
-      pinDrag.style.transform = 'translate(' + (c.x - 60) + 'px,' + (c.y - 60) + 'px)';
+  function tryUnlock(){
+    var value = (pinInput.value || '').trim();
+    if (value.toLowerCase() === SECRET_WORD.toLowerCase()){
+      pinErr.classList.remove('show');
       unlock();
     } else {
-      placePin();
-      pinDrag.classList.add('hold');
+      var panel = document.querySelector('.pin-panel');
+      panel.classList.remove('wrong');
+      void panel.offsetWidth;
+      panel.classList.add('wrong');
+      pinErr.classList.add('show');
+      pinInput.value = '';
+      pinInput.focus();
     }
   }
 
-  pinDrag.addEventListener('pointerdown', beginDrag);
-  pinDrag.addEventListener('pointermove', onDragMove);
-  pinDrag.addEventListener('pointerup', endDrag);
-  pinDrag.addEventListener('pointercancel', endDrag);
-  document.getElementById('btnInsert').addEventListener('click', function(){
-    pinDrag.style.transform = 'translate(' + (pinSceneCenter().x - 60) + 'px,' + (pinSceneCenter().y - 60) + 'px)';
-    unlock();
+  document.getElementById('btnUnlock').addEventListener('click', tryUnlock);
+  pinInput.addEventListener('keydown', function(e){
+    if (e.key === 'Enter') tryUnlock();
   });
 
   function openLock(){
     hideScreen(stage);
     showScreen(lock);
     lock.dataset.open = '0';
-    pinDrag.style.opacity = '1';
-    pinDrag.classList.remove('snapped','inserted','dragging');
-    pinDrag.classList.add('hold');
+    pinInput.value = '';
     padlock.classList.remove('unlocked');
-    setTimeout(placePin, 50);
+    document.querySelector('.pin-panel').classList.remove('wrong');
+    pinErr.classList.remove('show');
+    setTimeout(function(){ pinInput.focus(); }, 700);
   }
 
   function startLetter(){
