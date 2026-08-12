@@ -64,7 +64,9 @@
 
   /* ---------- pantallas ---------- */
   .screen{position:fixed;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;
-    opacity:0;visibility:hidden;transition:opacity 1s ease, visibility 1s;}
+    opacity:0;visibility:hidden;transition:opacity 1s ease, visibility 1s;
+    overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+    padding:calc(env(safe-area-inset-top,0px) + 16px) 16px calc(env(safe-area-inset-bottom,0px) + 16px);}
   .screen.show{opacity:1;visibility:visible}
   .fade{animation:fadein 1.4s ease forwards}
   @keyframes fadein{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
@@ -224,6 +226,27 @@
     .paper-head{padding:18px 20px 10px}
     #scroll{padding:16px 24px 50px}
     .sun{width:110px;height:110px}
+    .lock-scene{height:190px}
+    .padlock{width:150px;height:150px}
+    .lock-title{font-size:clamp(22px,7vw,30px)}
+    .seal{width:88px;height:88px}
+    #end .big{font-size:clamp(24px,7vw,32px)}
+  }
+
+  @media (max-height:600px){
+    .paper{max-height:88vh}
+    .lock-scene{height:160px;margin-top:14px}
+    .padlock{width:130px;height:130px}
+    .pin-panel{gap:10px;margin-top:14px}
+    .sun{width:90px;height:90px}
+    #stage{padding-top:8vh}
+    #end{padding-top:8vh}
+  }
+
+  @media (max-width:380px){
+    #scroll{padding:14px 20px 44px}
+    .paper-head h2{font-size:22px}
+    .sig{font-size:22px}
   }
 </style>
 </head>
